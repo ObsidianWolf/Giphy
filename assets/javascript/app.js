@@ -4,7 +4,7 @@
 //your dynamically creating buttons
 var toonBtns = ["Finn the Human", "Jake the Dog", "Princess bubble gum", "Marceline the Vampire Queen"];
 
-var toon;
+var toon = " ";
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -21,6 +21,7 @@ function renderButtons() {
         t.addClass("toonNameBtns");
 
         t.text(toonBtns[i]);
+        console.log(toonBtns[i]);
 
         $(".toonsView").append(t);
     }
@@ -40,14 +41,16 @@ $("#search").on("click", function (event) {
     renderButtons();
 
     getCartoonGifs(toon);
+    console.log(getCartoonGifs(toon));
 
 });
 
 $(".toonNameBtns").on("click", function(event) {
-    console.log("");
+
+    
 });
 
-function getCartoonGifs(toon) {
+function getCartoonGifs() {
   console.log(`From getCartoonGifs function: ${toon}`);
   var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=nY2NlkUcEtMZ5jfmYGUM1GtkEj0wveE7&q=" + toon + "-cartoons&rating=pg&limit=10";
 
