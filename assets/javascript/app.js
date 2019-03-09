@@ -2,11 +2,10 @@
 //////////////////global variables///////////////
 /////////////////////////////////////////////////
 //your dynamically creating buttons
-var toonBtns = ["Finn the Human", "Jake the Dog", "Princess bubble gum", "Marceline the Vampire Queen"];
+let toonBtns = ["Finn the Human", "Jake the Dog", "Princess bubble gum", "Marceline the Vampire Queen"];
 
-var toon = " ";
+// var toon = " ";
 
-/////////////////////////////////////////////////
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 
@@ -16,71 +15,94 @@ function renderButtons() {
 
     for (i = 0; i < toonBtns.length; i++) {
 
-        var t = $("<button>");
+        let newButton = $("<button>");
 
-        t.addClass("toonNameBtns");
+        newButton.addClass("toonNameBtns");
 
-        t.text(toonBtns[i]);
-        console.log(toonBtns[i]);
+        newButton.text(toonBtns[i]);
+        
+        $(".toonsView").append(newButton);
+    };
+    console.log("Created Buttons");
 
-        $(".toonsView").append(t);
-    }
-
-}
+};
 
 renderButtons();
 
 $("#search").on("click", function (event) {
-
     event.preventDefault();
+    let toon = $("#toon-input").val().trim();
 
-    (toon) = $("#toon-input").val().trim()
+    if (toon && toonBtns.indexOf(toon) == -1) {
+        toonBtns.push(toon);
+        renderButtons();
 
-    toonBtns.push(toon);
+        console.log(toon);
+        getCartoonGifs(toon);
+    };
+    console.log("Search button clicked and executed");
+});
 
-    renderButtons();
-
+$(".toonsView").on("click", ".toonNameBtns", function(){
+    console.log($(this).text());
+    let toon = $(this).text();
     getCartoonGifs(toon);
-    console.log(getCartoonGifs(toon));
+    console.log(`"${$(this).text()}" button was clicked`);
+});
+
+function getCartoonGifs(search) {
+    console.log(`Calling getCartoonGifs function with the following parameter: ${search}`);
+    const queryURL = "https://api.giphy.com/v1/gifs/search?api_key=nY2NlkUcEtMZ5jfmYGUM1GtkEj0wveE7&q=" + search + "&rating=g&limit=10";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+
+        const results = response.data;
+
+        for (let i = 0; i < results.length; i++) {
+
+            const toonDiv = $("<div>");
+
+            const p = $("<p>").text("Rated: " + results[i].rating);
+
+            const toonImage = $("<img>").attr("src", results[i].images.fixed_height_still.url);
+
+            toonImage.addClass("gifs");
+
+            toonImage.data("still", results[i].images.fixed_height_still.url);
+
+            toonImage.data("animated", results[i].images.fixed_height.url);
+
+            toonDiv.prepend(p);
+
+            toonDiv.prepend(toonImage);
+
+            $("#gifsAppearHere").prepend(toonDiv);
+        };
+        console.log("AJAX request completed");
+    });
+};
+
+$("#gifsAppearHere").on("click", ".gifs", function(){
+
+    const current = $(this).attr("src");
+
+    console.log($(this).data("still"));
+
+    const animated = $(this).data("animated"); 
+
+    const still = $(this).data("still");
+    if(current === still){
+        $(this).attr("src", animated);    
+    }else{
+        $(this).attr("src", still);    
+    } 
 
 });
 
-$(".toonNameBtns").on("click", function(event) {
-
-    
-});
-
-function getCartoonGifs() {
-  console.log(`From getCartoonGifs function: ${toon}`);
-  var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=nY2NlkUcEtMZ5jfmYGUM1GtkEj0wveE7&q=" + toon + "-cartoons&rating=pg&limit=10";
-
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-
-    var results = response.data;
-
-    for (var i = 0; i < results.length; i++) {
-
-        var toonDiv = $("<div>");
-
-        var p = $("<p>").text("Rated: " + results[i].rating);
-
-        var toonImage = $("<img>").attr("src", results[i].images.fixed_height.url);
-
-        toonDiv.prepend(p);
-
-        toonDiv.prepend(toonImage);
-
-        $("#gifsAppearHere").prepend(toonDiv);
-
-    }
-
-});
-
-}
 
 
 
