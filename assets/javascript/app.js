@@ -9,6 +9,7 @@ let toonBtns = ["Finn the Human", "Jake the Dog", "Princess bubble gum", "Marcel
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 
+
 function renderButtons() {
 
     $(".toonsView").empty();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -10,28 +11,40 @@
     <title>Giphy Cartoon Network</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
+
+    <div class="row">
+
         <div class="container">
 
-                <div class="toonsView"></div>
-        
-                    <div class="search-container">
-        
-                        <form class="searchBar">
-                            <div class="input-field">
-                                <input type="text" placeholder="Cartoon Name" name="search" id="toon-input">
-                                <button class="btn waves-effect waves-light btn-small" type="submit" name="action" id="search">Search
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-        
-                <div id="gifsAppearHere">
+            <div class="col s6 l9 toonsView"></div>
+
+            <form class="searchBar">
+                <div class="col s8 l10 input-field">
+                    <input type="text" placeholder="Cartoon Name" name="search" id="toon-input">
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="action"
+                        id="search">Search
+                    </button>
                 </div>
-        
-            </div>
-    
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="container">
+
+            <div class="col s12" id="gifsAppearHere"></div>
+
+        </div>
+
+    </div>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
+
 </html>
